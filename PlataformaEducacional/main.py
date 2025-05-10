@@ -6,6 +6,19 @@ from statistics import mean
 
 USERS_FILE = "usuarios.json"
 
+QUESTOES = [
+    {"pergunta": "Quantos números pares há entre 1 e 10?", "resposta": "5"},
+    {"pergunta": "Qual é o resultado de 2 + 2 * 2?", "resposta": "6"},
+    {"pergunta": "Qual é a capital do Brasil?", "resposta": "Brasília"},
+    {"pergunta": "Qual linguagem usamos neste programa?", "resposta": "Python"},
+    {"pergunta": "Qual é o número binário de 2?", "resposta": "10"},
+    {"pergunta": "Quanto é 10 dividido por 2?", "resposta": "5"},
+    {"pergunta": "Qual operador usamos para comparar igualdade em Python?", "resposta": "=="},
+    {"pergunta": "Qual é o valor booleano de 0 em Python?", "resposta": "False"},
+    {"pergunta": "Quantos bits tem 1 byte?", "resposta": "8"},
+    {"pergunta": "Qual comando usamos para imprimir algo na tela em Python?", "resposta": "print"},
+]
+
 def carregar_usuarios():
     if os.path.exists(USERS_FILE):
         with open(USERS_FILE, "r") as f:
@@ -77,21 +90,6 @@ def acessar_conteudo():
         else:
             print("Opção inválida. Tente novamente.")
 
-def avaliar_usuario(usuario):
-    print("\n📊 Exercício de lógica:")
-    resposta = input("Quantos números pares há entre 1 e 10? ")
-    try:
-        acertos = 0
-        if int(resposta) == 5:
-            acertos += 1
-            print("✔️ Correto!")
-        else:
-            print("❌ Incorreto. Resposta correta: 5")
-        usuario["desempenho"].append(acertos)
-        atualizar_usuario(usuario)
-    except ValueError:
-        print("Entrada inválida.")
-
 def atualizar_usuario(usuario_atualizado):
     usuarios = carregar_usuarios()
     for i, usuario in enumerate(usuarios):
@@ -99,6 +97,37 @@ def atualizar_usuario(usuario_atualizado):
             usuarios[i] = usuario_atualizado
             break
     salvar_usuarios(usuarios)
+
+def avaliar_usuario(usuario):
+    print("\n📊 Exercício de lógica:")
+    perguntas = [
+        ("Quantos números pares há entre 1 e 10?", "5"),
+        ("Qual o resultado de 3 + 4?", "7"),
+        ("Se um número é par e menor que 5, qual pode ser?", "2"),
+        ("Qual é o valor de 2 * 3?", "6"),
+        ("Se hoje é segunda, que dia será depois de dois dias?", "quarta"),
+        ("Quanto é 10 dividido por 2?", "5"),
+        ("Qual o número ímpar entre 4, 6, 7 e 8?", "7"),
+        ("Quanto é 9 - 3?", "6"),
+        ("Qual o resultado de 2 elevado ao quadrado?", "4"),
+        ("Quantos lados tem um triângulo?", "3")
+    ]
+
+    acertos = 0
+    for i, (pergunta, resposta_correta) in enumerate(perguntas, 1):
+        resposta = input(f"{i}. {pergunta} ").strip().lower()
+        if resposta == resposta_correta:
+            print("✔️ Correto!")
+            acertos += 1
+        else:
+            print(f"❌ Incorreto. Resposta correta: {resposta_correta}")
+
+    print(f"\nVocê acertou {acertos} de {len(perguntas)} questões.")
+    usuario["desempenho"].append(acertos)
+
+    # Atualiza a média no próprio JSON
+    usuario["media"] = round(mean(usuario["desempenho"]), 2)
+    atualizar_usuario(usuario)
 
 def gerar_relatorio():
     usuarios = carregar_usuarios()

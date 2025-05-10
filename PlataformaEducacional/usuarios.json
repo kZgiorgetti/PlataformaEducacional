@@ -3,6 +3,10 @@
         "nome": "Docente",
         "email": "docente@email.com",
         "senha": "4ef0df4acfa4beed6c57c8033607ff48b6a5f47646f9c925484b715fc635f5d0",
-        "desempenho": []
+        "desempenho": [
+            10,
+            8
+        ],
+        "media": 9
     }
 ]
