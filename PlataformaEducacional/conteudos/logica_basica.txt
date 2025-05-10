@@ -1,0 +1,12 @@
+Lógica Computacional Básica
+
+Neste módulo, você aprenderá:
+- O que são variáveis
+- Como usar estruturas condicionais (if, else)
+- Como funcionam os loops (for, while)
+- Operadores lógicos e booleanos
+
+Exemplo:
+x = 5
+if x > 3:
+    print("x é maior que 3")
